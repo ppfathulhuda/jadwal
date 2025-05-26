@@ -402,6 +402,7 @@
         const doaTranslation = dailyDoaSection.querySelector('.doa-translation');
         const doaSource = dailyDoaSection.querySelector('.doa-source');
         const doaLoading = dailyDoaSection.querySelector('.no-data');
+        const doaTitleDisplay = dailyDoaSection.querySelector('#doa-title-display');
 
 
         /**
@@ -425,6 +426,7 @@
                     doaLatin.textContent = randomDoa.indo; // Assuming 'indo' is the latin transliteration
                     doaTranslation.textContent = randomDoa.translation || randomDoa.indo; // Use 'translation' if available, fallback to 'indo'
                     doaSource.textContent = `(Sumber: ${randomDoa.judul || randomDoa.source || 'Tidak Diketahui'})`; // Use 'judul' or 'source'
+                    doaTitleDisplay.textContent = randomDoa.judul || 'Doa Harian'; // Display 'judul' as the title
 
                     doaLoading.style.display = 'none';
                     doaContentDiv.style.display = 'block';

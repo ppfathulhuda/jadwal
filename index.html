@@ -408,6 +408,9 @@
         /**
          * Fetches a random daily prayer from the API and displays it.
          */
+        /**
+         * Fetches a random daily prayer from the API and displays it.
+         */
         async function fetchDailyDoa() {
             try {
                 doaLoading.textContent = "Memuat doa harian...";
@@ -426,7 +429,17 @@
                     doaLatin.textContent = randomDoa.indo; // Assuming 'indo' is the latin transliteration
                     doaTranslation.textContent = randomDoa.translation || randomDoa.indo; // Use 'translation' if available, fallback to 'indo'
                     doaSource.textContent = `(Sumber: ${randomDoa.judul || randomDoa.source || 'Tidak Diketahui'})`; // Use 'judul' or 'source'
-                
+
+                    // Tambahkan judul doa ke dalam section header
+                    const doaTitleElement = dailyDoaSection.querySelector('h2');
+                    if (doaTitleElement) {
+                        doaTitleElement.textContent = `✨ ${randomDoa.judul || 'Doa Harian Pilihan'}`;
+                    } else {
+                        // Jika elemen h2 tidak ditemukan, buat yang baru
+                        const newTitle = document.createElement('h2');
+                        newTitle.textContent = `✨ ${randomDoa.judul || 'Doa Harian Pilihan'}`;
+                        dailyDoaSection.prepend(newTitle);
+                    }
 
                     doaLoading.style.display = 'none';
                     doaContentDiv.style.display = 'block';
@@ -440,7 +453,6 @@
                 doaContentDiv.style.display = 'none';
             }
         }
-
         /**
          * Checks if a given time string (HH:MM or HH.MM) is in the future relative to 'now'.
          * @param {string} waktu - The time string (e.g., "08:00" or "14.00").

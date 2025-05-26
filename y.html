@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kegiatan Santri Putra Fathul Huda</title>
+    <style>
+        /* Global Styles - Spotify Inspired */
+        body {
+            font-family: 'Inter', sans-serif; /* Modern, clean font */
+            background: #121212; /* Dark background, Spotify-like */
+            color: #b3b3b3; /* Light grey text for contrast */
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Header - Spotify Inspired */
+        header {
+            background: linear-gradient(to right, #1DB954, #1ED760); /* Spotify green gradient */
+            color: white;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-bottom-left-radius: 20px; /* Rounded bottom corners */
+            border-bottom-right-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            margin: 0.8rem 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content Area */
+        main {
+            padding: 1.5rem;
+            max-width: 1000px; /* Adjusted max-width */
+            margin: 0 auto;
+        }
+
+        /* Daily Doa Section */
+        #daily-doa-section {
+            background: #1f1f1f; /* Darker card background */
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #282828;
+            text-align: center;
+        }
+
+        #daily-doa-section h2 {
+            color: #1ED760; /* Spotify green */
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-bottom: 2px solid #282828;
+            padding-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        #daily-doa-section .doa-arabic {
+            font-family: 'Amiri', serif; /* A suitable Arabic font */
+            font-size: 2.2rem;
+            color: #fff;
+            margin: 1.5rem 0;
+            line-height: 1.8;
+            direction: rtl; /* Right-to-left for Arabic */
+            text-align: right;
+        }
+
+        #daily-doa-section .doa-latin {
+            font-size: 1rem;
+            color: #b3b3b3;
+            font-style: italic;
+            margin-bottom: 0.8rem;
+        }
+
+        #daily-doa-section .doa-translation {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        #daily-doa-section .doa-source {
+            font-size: 0.85rem;
+            color: #8e8e8e;
+            margin-top: 1rem;
+        }
+
+        section h2 {
+            color: #1DB954; /* Spotify green for section titles */
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #282828; /* Darker border */
+            font-size: 2.2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Madrasah Diniyah Today Section - Spotify Inspired */
+        #madin-today {
+            background: #1f1f1f; /* Darker card background */
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #282828;
+        }
+
+        #madin-today h2 {
+            color: #1DB954; /* Green for today's schedule title */
+            border-bottom-color: #333;
+            text-align: left;
+            font-size: 1.8rem;
+        }
+
+        .kelas-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .kelas-box {
+            flex: 1 1 calc(50% - 1rem); /* Two columns on larger screens */
+            min-width: 250px;
+            background: #282828; /* Even darker for inner boxes */
+            padding: 1.2rem;
+            border-radius: 10px;
+            box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.2);
+            border: 1px solid #333;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .kelas-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .kelas-box .kelas-title {
+            font-weight: bold;
+            color: #b3b3b3; /* Light grey for class titles */
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            text-align: center;
+            border-bottom: 1px dashed #444;
+            padding-bottom: 0.5rem;
+        }
+
+        .jadwal-item-madin {
+            margin-bottom: 0.6rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            background: #333; /* Slightly lighter background for items */
+            border: 1px solid #444;
+            transition: background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .jadwal-item-madin:last-child {
+            margin-bottom: 0;
+        }
+
+        .jadwal-item-madin .time {
+            font-weight: 700;
+            color: #fff; /* White for time */
+            font-size: 1.1em;
+            margin-bottom: 0.2rem;
+        }
+
+        .jadwal-item-madin .subject {
+            font-weight: 500;
+            color: #b3b3b3;
+            font-size: 0.95em;
+        }
+
+        .jadwal-item-madin .teacher {
+            font-size: 0.8em;
+            color: #8e8e8e;
+            margin-top: 0.2rem;
+        }
+
+        /* Highlight for nearest upcoming schedule - Vibrant Green */
+        .jadwal-mendatang {
+            background-color: #1ED760; /* Spotify green */
+            border-left: 5px solid #0a8a3a; /* Darker green border */
+            box-shadow: 0 4px 15px rgba(30, 215, 96, 0.4);
+        }
+
+        .jadwal-mendatang .time, .jadwal-mendatang .subject, .jadwal-mendatang .teacher {
+            color: #121212; /* Dark text on green background */
+        }
+
+        /* All Schedules Grid - Spotify Inspired */
+        .all-schedules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .schedule-card {
+            background: #1f1f1f; /* Darker card background */
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #282828;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .schedule-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .schedule-card h3 {
+            color: #1DB954; /* Green for card titles */
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.5rem;
+        }
+
+        .schedule-card p {
+            margin-bottom: 0.5rem;
+            color: #b3b3b3;
+            font-size: 0.9rem;
+        }
+
+        .schedule-card p strong {
+            font-weight: 600;
+            color: #e0e0e0; /* Lighter text for strong */
+            margin-right: 5px;
+        }
+
+        .schedule-card em {
+            font-style: italic;
+            color: #8e8e8e;
+            display: block;
+            margin-top: 0.3rem;
+            font-size: 0.8em;
+        }
+
+        .schedule-divider {
+            border: 0;
+            border-top: 1px dashed #444; /* Darker dashed divider */
+            margin: 1rem 0;
+        }
+
+        /* No Data / Loading Message */
+        .no-data {
+            text-align: center;
+            color: #8e8e8e;
+            font-style: italic;
+            padding: 1.5rem;
+        }
+
+        /* Footer - Spotify Inspired */
+        footer {
+            background: #000; /* Pure black footer */
+            color: #6a6a6a; /* Darker grey text */
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            margin-top: 3rem;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            main {
+                padding: 1rem;
+            }
+            section h2 {
+                font-size: 1.8rem;
+            }
+            .kelas-box {
+                flex: 1 1 100%; /* Stack columns on smaller screens */
+                min-width: unset;
+            }
+            .all-schedules-grid {
+                grid-template-columns: 1fr; /* Stack cards on smaller screens */
+            }
+            .schedule-card h3 {
+                font-size: 1.3rem;
+            }
+            #daily-doa-section .doa-arabic {
+                font-size: 1.8rem;
+            }
+            #daily-doa-section .doa-translation {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Pondok Pesantren Fathul Huda</h1>
+        <p>Jadwal Kegiatan Santri IPNU IPPNU</p>
+    </header>
+
+    <main>
+        <section id="daily-doa-section">
+            <h2>✨ Doa Harian Pilihan</h2>
+            <p class="no-data">Memuat doa harian...</p>
+            <div class="doa-content" style="display: none;">
+                <p class="doa-arabic"></p>
+                <p class="doa-latin"></p>
+                <p class="doa-translation"></p>
+                <p class="doa-source"></p>
+            </div>
+        </section>
+
+        <section id="madin-today">
+            <h2>📚 Jadwal Madrasah Diniyah Hari Ini</h2>
+            <div id="madin-today-container" class="kelas-group">
+                <p class="no-data">Memuat jadwal madrasah hari ini...</p>
+            </div>
+        </section>
+
+        <div class="all-schedules-grid">
+            <div id="jadwal-maqro" class="schedule-card">
+                <h3>Memuat data...</h3>
+            </div>
+            <div id="jadwal-sampah" class="schedule-card">
+                <h3>Memuat data...</h3>
+            </div>
+            <div id="jadwal-masak" class="schedule-card">
+                <h3>Memuat data...</h3>
+            </div>
+            <div id="jadwal-piket" class="schedule-card">
+                <h3>Memuat data...</h3>
+            </div>
+            <div id="jadwal-mujahadah" class="schedule-card">
+                <h3>Memuat data...</h3>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2025 Pondok Pesantren Fathul Huda. Semua Hak Cipta Dilindungi.
+    </footer>
+
+    <script>
+        const spreadsheetId = '1Zh0Ws1kor0JkT2anFCTGfEoPyFu13Dnyx86OIKlrVAs';
+        const now = new Date(); // Current time for highlighting
+
+        // Get today's Gregorian weekday in Indonesian (e.g., "Senin", "Selasa")
+        const todayGregorianName = now.toLocaleDateString('id-ID', { weekday: 'long' }).toLowerCase();
+        console.log("Hari ini (Gregorian dari JavaScript):", todayGregorianName);
+
+        // --- Javanese Calendar Calculation ---
+        // Reference: 1 Januari 2000 adalah Sabtu Kliwon
+        const referenceDate2000 = new Date('2000-01-01T00:00:00Z');
+        const msPerDay = 1000 * 60 * 60 * 24;
+        const daysSince2000 = Math.floor((now.getTime() - referenceDate2000.getTime()) / msPerDay);
+
+        // Siklus Pasaran Jawa: Legi (0), Pahing (1), Pon (2), Wage (3), Kliwon (4)
+        // Kliwon adalah indeks 4. Jadi, (daysSince2000 + 4) % 5
+        const pasaranNames = ['legi', 'pahing', 'pon', 'wage', 'kliwon'];
+        const todayPasaranIndex = (daysSince2000 + 4) % 5;
+        const todayPasaranName = pasaranNames[todayPasaranIndex];
+
+        console.log("Pasaran hari ini:", todayPasaranName);
+
+        // Mapping sheet names to their respective container IDs
+        const sheets = {
+            "Jadwal Maqro & Sholawatan": "jadwal-maqro",
+            "Jadwal Buang Sampah": "jadwal-sampah",
+            "Jadwal Masak": "jadwal-masak",
+            "Jadwal Piket MA": "jadwal-piket",
+            "Jadwal Mujahadah & Imam": "jadwal-mujahadah",
+            "Jadwal Madrasah Diniyah": "jadwal-madin", // This sheet is still needed for 'madin-today'
+        };
+
+        const madinTodayContainer = document.getElementById('madin-today-container');
+        const dailyDoaSection = document.getElementById('daily-doa-section');
+        const doaContentDiv = dailyDoaSection.querySelector('.doa-content');
+        const doaArabic = dailyDoaSection.querySelector('.doa-arabic');
+        const doaLatin = dailyDoaSection.querySelector('.doa-latin');
+        const doaTranslation = dailyDoaSection.querySelector('.doa-translation');
+        const doaSource = dailyDoaSection.querySelector('.doa-source');
+        const doaLoading = dailyDoaSection.querySelector('.no-data');
+
+
+        /**
+         * Fetches a random daily prayer from the API and displays it.
+         */
+        async function fetchDailyDoa() {
+            try {
+                doaLoading.textContent = "Memuat doa harian...";
+                // Menggunakan API yang disarankan pengguna: https://api.myquran.com/v2/doa/acak
+                const response = await fetch('https://api.myquran.com/v2/doa/acak');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json(); // Use 'result' to avoid conflict with 'data' property
+                console.log("Data Doa Harian dari myquran.com/v2/doa/acak:", result);
+
+                if (result && result.status === true && result.data) {
+                    const randomDoa = result.data; // The random doa is directly in result.data
+
+                    doaArabic.textContent = randomDoa.arab;
+                    doaLatin.textContent = randomDoa.indo; // Assuming 'indo' is the latin transliteration
+                    doaTranslation.textContent = randomDoa.translation || randomDoa.indo; // Use 'translation' if available, fallback to 'indo'
+                    doaSource.textContent = `(Sumber: ${randomDoa.judul || randomDoa.source || 'Tidak Diketahui'})`; // Use 'judul' or 'source'
+
+                    doaLoading.style.display = 'none';
+                    doaContentDiv.style.display = 'block';
+                } else {
+                    doaLoading.textContent = "Tidak ada doa harian yang tersedia dari API ini.";
+                    doaContentDiv.style.display = 'none';
+                }
+            } catch (error) {
+                console.error("Error fetching daily doa:", error);
+                doaLoading.textContent = "Gagal memuat doa harian. Cek konsol untuk detail.";
+                doaContentDiv.style.display = 'none';
+            }
+        }
+
+        /**
+         * Checks if a given time string (HH:MM or HH.MM) is in the future relative to 'now'.
+         * @param {string} waktu - The time string (e.g., "08:00" or "14.00").
+         * @returns {boolean} - True if the time is in the future, false otherwise.
+         */
+        function isWaktuMendatang(waktu) {
+            if (!waktu) return false;
+            // Handle both HH:MM and HH.MM formats
+            const timeParts = waktu.includes(':') ? waktu.split(':') : waktu.split('.');
+            const [jamStr, menitStr] = timeParts;
+
+            if (!jamStr || !menitStr) return false;
+            const jam = parseInt(jamStr, 10);
+            const menit = parseInt(menitStr, 10);
+
+            const waktuJadwal = new Date();
+            waktuJadwal.setHours(jam, menit, 0, 0); // Set date to today, time to scheduled time
+
+            return waktuJadwal > now; // Check if scheduled time is after current time
+        }
+
+        // Fetch data for each schedule type
+        for (const [sheetName, containerId] of Object.entries(sheets)) {
+            const url = `https://opensheet.elk.sh/${spreadsheetId}/${encodeURIComponent(sheetName)}`;
+            console.log(`--- Memulai Fetch untuk: ${sheetName} ---`);
+            console.log(`URL Fetch: ${url}`); // Log the URL being fetched
+
+            fetch(url)
+                .then(res => {
+                    console.log(`Response status untuk ${sheetName}: ${res.status}`); // Log response status
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    console.log(`Data diterima untuk ${sheetName}:`, data); // Log the raw data received
+
+                    let icon = '';
+                    if (sheetName === "Jadwal Madrasah Diniyah") {
+                        icon = '📚 '; // Ikon buku
+                    } else if (sheetName === "Jadwal Maqro & Sholawatan") {
+                        icon = '🎤 '; // Ikon mikrofon
+                    } else if (sheetName === "Jadwal Buang Sampah") {
+                        icon = '🗑️ '; // Ikon tempat sampah
+                    } else if (sheetName === "Jadwal Masak") {
+                        icon = '🍳 '; // Ikon telur dadar
+                    } else if (sheetName === "Jadwal Piket MA") {
+                        icon = '🧹 '; // Ikon sapu
+                    } else if (sheetName === "Jadwal Mujahadah & Imam") {
+                        icon = '🙏 '; // Ikon tangan berdoa
+                    }
+
+                    // Special handling for "Jadwal Madrasah Diniyah"
+                    if (sheetName === "Jadwal Madrasah Diniyah") {
+                        const todayMadinSchedules = data.filter(item => {
+                            const itemHari = (item.Hari || '').trim().toLowerCase(); // Trim spaces
+                            console.log(`Madin filter: Item Hari='${itemHari}', Hari Ini='${todayGregorianName}', Match: ${itemHari === todayGregorianName}`); // Log comparison
+                            return itemHari === todayGregorianName;
+                        });
+                        console.log("Jadwal Madrasah Diniyah Hari Ini (setelah filter):", todayMadinSchedules);
+
+                        const groupedByKelas = {};
+                        todayMadinSchedules.forEach(row => {
+                            const kelas = (row.Kelas || 'Tidak Diketahui').trim().toLowerCase(); // Trim spaces
+                            if (!groupedByKelas[kelas]) {
+                                groupedByKelas[kelas] = [];
+                            }
+                            groupedByKelas[kelas].push(row);
+                        });
+                        console.log("Jadwal Madrasah Diniyah Dikelompokkan per Kelas:", groupedByKelas);
+
+                        for (const kelas in groupedByKelas) {
+                            groupedByKelas[kelas].sort((a, b) => {
+                                const timeA = a.Waktu ? (a.Waktu.includes(':') ? a.Waktu.split(':') : a.Waktu.split('.')).map(Number) : [24, 0];
+                                const timeB = b.Waktu ? (b.Waktu.includes(':') ? b.Waktu.split(':') : b.Waktu.split('.')).map(Number) : [24, 0];
+                                if (timeA[0] !== timeB[0]) return timeA[0] - timeB[0];
+                                return timeA[1] - timeB[1];
+                            });
+                        }
+
+                        madinTodayContainer.innerHTML = ''; // Clear previous content
+                        if (Object.keys(groupedByKelas).length === 0 || todayMadinSchedules.length === 0) {
+                            madinTodayContainer.innerHTML = "<p class='no-data'>Tidak ada jadwal madrasah untuk hari ini.</p>";
+                        } else {
+                            for (const kelas in groupedByKelas) {
+                                const kelasBox = document.createElement('div');
+                                kelasBox.classList.add('kelas-box');
+                                kelasBox.innerHTML = `<div class="kelas-title">Kelas: ${kelas.toUpperCase()}</div>`;
+
+                                let displayedSchedule = null;
+
+                                // Find the first upcoming schedule for this class
+                                for (const row of groupedByKelas[kelas]) {
+                                    if (isWaktuMendatang(row.Waktu)) {
+                                        displayedSchedule = row;
+                                        break;
+                                    }
+                                }
+
+                                // If no upcoming schedule, take the first one from the sorted list (meaning all have passed)
+                                if (!displayedSchedule && groupedByKelas[kelas].length > 0) {
+                                    displayedSchedule = groupedByKelas[kelas][0];
+                                }
+
+                                if (displayedSchedule) {
+                                    kelasBox.innerHTML += `
+                                        <div class="jadwal-item-madin ${isWaktuMendatang(displayedSchedule.Waktu) ? 'jadwal-mendatang' : ''}">
+                                            <span class="time">${displayedSchedule.Waktu || 'N/A'}</span><br>
+                                            <span class="subject">${displayedSchedule.Nama_Kegiatan || 'N/A'}</span><br>
+                                            <span class="teacher">Pengajar: ${displayedSchedule["Petugas / Pengampu"] || 'Belum Ditentukan'}</span>
+                                        </div>
+                                    `;
+                                } else {
+                                    kelasBox.innerHTML += `<p class="no-data">Tidak ada jadwal untuk kelas ini hari ini.</p>`;
+                                }
+                                madinTodayContainer.appendChild(kelasBox);
+                            }
+                        }
+                    } else {
+                        // Handle other general schedules (Maqro, Sampah, etc.)
+                        const container = document.getElementById(containerId);
+                        if (!container) {
+                            console.warn(`Container with ID ${containerId} not found for sheet ${sheetName}.`);
+                            return;
+                        }
+
+                        // Clear loading message
+                        const noDataElement = container.querySelector('.no-data');
+                        if (noDataElement) {
+                            noDataElement.remove();
+                        }
+
+                        // Filter data to only show schedules for today
+                        const todaySchedules = data.filter(item => {
+                            const itemHari = (item.Hari || '').trim().toLowerCase(); // Trim spaces
+                            const todayLower = todayGregorianName; // Gregorian day name
+                            const todayPasaran = todayPasaranName; // Javanese pasaran name
+
+                            // Special handling for "Jadwal Maqro & Sholawatan"
+                            if (sheetName === "Jadwal Maqro & Sholawatan") {
+                                // Check if the itemHari contains both the Gregorian day and the Javanese pasaran
+                                const match = itemHari.includes(todayLower) && itemHari.includes(todayPasaran);
+                                console.log(`${sheetName} filter: Item Hari='${itemHari}', Hari Ini='${todayLower} ${todayPasaran}', Match: ${match}`);
+                                return match;
+                            } else {
+                                // For other sheets, exact match with Gregorian day is expected
+                                console.log(`${sheetName} filter: Item Hari='${itemHari}', Hari Ini='${todayLower}', Match: ${itemHari === todayLower}`);
+                                return itemHari === todayLower;
+                            }
+                        });
+                        console.log(`Jadwal ${sheetName} Hari Ini (setelah filter):`, todaySchedules);
+
+                        // Re-add the h3 title for each schedule card
+                        container.innerHTML = `<h3>${icon}${sheetName}</h3>`; // Add icon to title
+
+                        if (!todaySchedules || todaySchedules.length === 0) {
+                            container.innerHTML += `<p class="no-data">Tidak ada jadwal untuk hari ini.</p>`;
+                            return;
+                        }
+
+                        let htmlContent = '';
+                        todaySchedules.forEach(row => {
+                            let waktu = row.Waktu || 'N/A';
+                            let namaKegiatan = row["Nama Kegiatan"] || 'N/A'; // Default to "Nama Kegiatan"
+                            let petugas = row["Petugas / Pengampu"] || 'Belum Ditentukan';
+                            let keterangan = row["Keterangan / Lokasi"] || '';
+
+                            // Specific adjustments for "Jadwal Masak" based on image analysis
+                            if (sheetName === "Jadwal Masak") {
+                                waktu = row["Jenis Kegiatan"] || 'N/A'; // "14.00" is in "Jenis Kegiatan" column
+                                namaKegiatan = row["Nama Kegiatan"] || 'N/A'; // "Masak Nasi" is in "Nama Kegiatan" column
+                            }
+                            // Specific adjustments for "Jadwal Maqro & Sholawatan" based on image analysis
+                            else if (sheetName === "Jadwal Maqro & Sholawatan") {
+                                waktu = row.Hari || 'N/A'; // Use 'Hari' as the primary time/day indicator for display
+                                namaKegiatan = row.Sholawatan || row["Nama Kegiatan"] || 'N/A'; // Fallback if 'Sholawatan' column exists
+                            }
+                            // Specific adjustments for "Jadwal Buang Sampah"
+                            else if (sheetName === "Jadwal Buang Sampah") {
+                                namaKegiatan = row["Nama Kegiatan"] || 'N/A'; // Use "Nama Kegiatan" with space
+                            }
+                            // Specific adjustments for "Jadwal Piket MA"
+                            else if (sheetName === "Jadwal Piket MA") {
+                                namaKegiatan = row["Nama Kegiatan"] || 'N/A'; // Use "Nama Kegiatan" with space
+                            }
+                            // Specific adjustments for "Jadwal Mujahadah & Imam"
+                            else if (sheetName === "Jadwal Mujahadah & Imam") {
+                                namaKegiatan = row["Nama Kegiatan"] || 'N/A'; // Use "Nama Kegiatan" with space
+                            }
+
+                            htmlContent += `
+                                <p><strong>Waktu:</strong> ${waktu}</p>
+                                <p><strong>Kegiatan:</strong> ${namaKegiatan}</p>
+                                <p><strong>Petugas:</strong> ${petugas}</p>
+                                <em>${keterangan}</em>
+                                <hr class="schedule-divider">
+                            `;
+                        });
+                        container.innerHTML += htmlContent;
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error fetching data for ${sheetName}:`, error); // Log the actual error
+                    // Handle error message for the specific container
+                    const container = document.getElementById(containerId);
+                    if (container) {
+                        const noDataElement = container.querySelector('.no-data');
+                        if (noDataElement) {
+                            noDataElement.textContent = `Gagal memuat data ${sheetName}. Cek konsol untuk detail.`;
+                        } else {
+                            container.innerHTML = `<h3>${icon}${sheetName}</h3><p class="no-data">Gagal memuat data ${sheetName}. Cek konsol untuk detail.</p>`;
+                        }
+                    }
+                });
+        }
+
+        // Call fetchDailyDoa when the page loads
+        document.addEventListener('DOMContentLoaded', fetchDailyDoa);
+    </script>
+</body>
+</html>
